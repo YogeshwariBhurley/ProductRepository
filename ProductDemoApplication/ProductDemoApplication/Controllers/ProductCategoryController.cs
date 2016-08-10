@@ -21,10 +21,7 @@ namespace ProductDemoApplication.Controllers
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
-            });
+            
             var prodLists = from ProductCategories in db.ProductCategories_Context select ProductCategories;
             var Prods = new List<ProductCategories>();
             if (prodLists.Any())

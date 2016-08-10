@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProductDemoApplication.Models
 {
-    [MetadataType(typeof(ProductCategoryListModel))]
+   // [MetadataType(typeof(ProductCategoryListModel))]
 
     public class ProductCategoryListModel
     {
