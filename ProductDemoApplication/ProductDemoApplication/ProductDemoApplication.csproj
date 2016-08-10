@@ -263,11 +263,11 @@
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
+    <Content Include="Views\PurchaseTransaction\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ProductTransaction\" />
-    <Folder Include="Views\PurchaseTransaction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
