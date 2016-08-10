@@ -16,6 +16,7 @@ namespace ProductDemoApplication.AutomapperCode
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
             });
         }
     }
