@@ -22,7 +22,7 @@ namespace ProductDemoApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<ProductContext>(null);
-            AutoMapperInit.Initialize();
+            //AutoMapperInit.Initialize();
         }
     }
 }
