@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProductDemoApplication.Models
 {
-    public class Products
+    public class ProductCategoryCreateEditModel
     {
-        public Products()
+        public ProductCategoryCreateEditModel()
         {
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
@@ -17,15 +17,7 @@ namespace ProductDemoApplication.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
-        public double Rate { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
-        //Navigation properties
-        //public int ProductCategoryId { get; set; }
-        public int ProductCategoryId { get; set; }
-        public virtual List<ProductCategories> ProductCategories { get; set; }
-
     }
 }

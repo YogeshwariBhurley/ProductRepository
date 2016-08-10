@@ -6,6 +6,7 @@ using System.Web;
 using System.Data.Entity;
 using ProductDemoApplication.Models;
 using System.Web.Mvc;
+using ProductDemoApplication.Entities;
 
 namespace ProductDemoApplication.Context
 {
@@ -16,5 +17,7 @@ namespace ProductDemoApplication.Context
         public DbSet<Customers> Customer_Context { get; set; }
         public DbSet<PurchaseTransactionSummeries> PurchaseTransactionSummery_Context { get; set; }
         public DbSet<PurchaseTransactionDetails> PurchaseTransactionDetails_Context { get; set; }
+
+        public System.Data.Entity.DbSet<ProductDemoApplication.Models.ProductCategoryCreateEditModel> ProductCategoryCreateEditModels { get; set; }
     }
 }

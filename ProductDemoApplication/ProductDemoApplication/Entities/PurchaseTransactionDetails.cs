@@ -5,7 +5,7 @@ using System.Web;
 
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductDemoApplication.Models
+namespace ProductDemoApplication.Entities
 {
     public class PurchaseTransactionDetails
     {

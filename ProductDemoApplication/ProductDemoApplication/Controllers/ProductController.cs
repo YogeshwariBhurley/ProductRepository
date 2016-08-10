@@ -10,6 +10,7 @@ using System.Net;
 using System.Data.Entity;
 
 using AutoMapper;
+using ProductDemoApplication.Entities;
 
 namespace ProductDemoApplication.Controllers
 {

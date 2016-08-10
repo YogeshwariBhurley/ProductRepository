@@ -21,8 +21,8 @@ namespace ProductDemoApplication.Controllers
         {
             var p = new PurchaseTransactionSummeries();
             p.customer = db.Customer_Context.ToList();
-            ViewBag.Category = db.ProductCategories_Context.ToList();
-          
+            ViewBag.Name = new SelectList(db.Customer_Context, "Id", "Name");
+
             return View(p);
        
         

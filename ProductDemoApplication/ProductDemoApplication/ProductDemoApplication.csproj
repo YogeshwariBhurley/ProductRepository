@@ -182,14 +182,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Customers.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Products.cs" />
-    <Compile Include="Models\ProductCategories.cs" />
-    <Compile Include="Models\PurchaseTransactionDetails.cs" />
-    <Compile Include="Models\PurchaseTransactionSummeries.cs" />
+    <Compile Include="Entities\AccountViewModels.cs" />
+    <Compile Include="Entities\Customers.cs" />
+    <Compile Include="Entities\IdentityModels.cs" />
+    <Compile Include="Entities\ManageViewModels.cs" />
+    <Compile Include="Entities\Products.cs" />
+    <Compile Include="Entities\ProductCategories.cs" />
+    <Compile Include="Entities\PurchaseTransactionDetails.cs" />
+    <Compile Include="Entities\PurchaseTransactionSummeries.cs" />
+    <Compile Include="Models\ProductCategoryCreateEditModel.cs" />
+    <Compile Include="Models\ProductCategoryListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

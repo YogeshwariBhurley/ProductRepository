@@ -8,6 +8,10 @@ using ProductDemoApplication.Context;
 using ProductDemoApplication.Models;
 using System.Net;
 using System.Data.Entity;
+using ProductDemoApplication.Entities;
+
+
+using AutoMapper;
 
 namespace ProductDemoApplication.Controllers
 {
@@ -17,7 +21,23 @@ namespace ProductDemoApplication.Controllers
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-            return View(db.ProductCategories_Context.ToList());
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+            });
+            var prodLists = from ProductCategories in db.ProductCategories_Context select ProductCategories;
+            var Prods = new List<ProductCategories>();
+            if (prodLists.Any())
+            {
+                foreach (var prod in prodLists)
+                {
+                    ProductCategories prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
+                    Prods.Add(prodModel);
+                   
+                }
+            }
+            return View(Prods);
+            //return View(db.ProductCategories_Context.ToList());
         }
         public ActionResult Create()
         {
