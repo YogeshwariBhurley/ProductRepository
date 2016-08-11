@@ -19,5 +19,9 @@ namespace ProductDemoApplication.Context
         public DbSet<PurchaseTransactionDetails> PurchaseTransactionDetails_Context { get; set; }
 
         public System.Data.Entity.DbSet<ProductDemoApplication.Models.ProductCategoryCreateEditModel> ProductCategoryCreateEditModels { get; set; }
+
+        public System.Data.Entity.DbSet<ProductDemoApplication.Models.ProductCategoryListModel> ProductCategoryListModels { get; set; }
+
+        public System.Data.Entity.DbSet<ProductDemoApplication.Models.ProductCreateEditModel> ProductCreateEditModels { get; set; }
     }
 }

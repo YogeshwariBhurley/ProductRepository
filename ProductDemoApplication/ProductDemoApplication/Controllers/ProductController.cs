@@ -20,7 +20,35 @@ namespace ProductDemoApplication.Controllers
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-            return View(db.Product_Context.ToList());
+            // return View(db.Product_Context.ToList());
+
+
+            //var prodLists = from ProductCategories in db.ProductCategories_Context select ProductCategories;
+            //var Prods = new List<ProductCategoryCreateEditModel>();
+            //if (prodLists.Any())
+            //{
+            //    foreach (var prod in prodLists)
+            //    {
+            //        //  ProductCategories prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
+            //        ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
+            //        Prods.Add(prodModel);
+
+            //    }
+            //}
+            //return View(Prods);
+
+           var product = from Products in db.Product_Context select Products;
+            var prods = new List<ProductCreateEditModel>();
+            if (product.Any())
+            {
+                foreach (var prod in product)
+                {
+                    // ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(prod);
+                    ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(prod);
+                    prods.Add(prodModel);
+                }
+            }
+            return View(prods);
         }
         public ActionResult Create()
         {

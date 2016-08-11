@@ -17,98 +17,90 @@ namespace ProductDemoApplication.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        // GET: ProductCategory
+        
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-            
+
             var prodLists = from ProductCategories in db.ProductCategories_Context select ProductCategories;
-            var Prods = new List<ProductCategories>();
+            var Prods = new List<ProductCategoryCreateEditModel>();
             if (prodLists.Any())
             {
                 foreach (var prod in prodLists)
                 {
-                    ProductCategories prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
+                    //  ProductCategories prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
+                    ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
                     Prods.Add(prodModel);
-                   
+
                 }
             }
             return View(Prods);
-            //return View(db.ProductCategories_Context.ToList());
+
         }
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
+
+
         public ActionResult Create(ProductCategories objProductCategories)
         {
-            if (ModelState.IsValid)
+            try
             {
+                var prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(objProductCategories);
                 db.ProductCategories_Context.Add(objProductCategories);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-
-            return View(objProductCategories);
+            catch
+            {
+                return View();
+            }
         }
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProductCategories productCategories = db.ProductCategories_Context.Find(id);
-            if (productCategories == null)
-            {
-                return HttpNotFound();
-            }
-            return View(productCategories);
+
+            var prodDetails = db.ProductCategories_Context.Find(id);
+            var prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prodDetails);
+            return View(prodModel);
         }
         [HttpPost]
         public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] ProductCategories productCategories)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(productCategories).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(productCategories);
+
+            var prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(productCategories);
+            db.Entry(productCategories).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
         }
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProductCategories productCategories = db.ProductCategories_Context.Find(id);
-            if (productCategories == null)
-            {
-                return HttpNotFound();
-            }
-            return View(productCategories);
+
+            var ProductCatDetails = db.ProductCategories_Context.Find(id);
+            ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
+            return View(prodModel);
         }
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProductCategories productCategories = db.ProductCategories_Context.Find(id);
-            if (productCategories == null)
-            {
-                return HttpNotFound();
-            }
-            return View(productCategories);
+
+            var ProductCatDetails = db.ProductCategories_Context.Find(id);
+            var prod = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
+            return View(prod);
         }
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            ProductCategories productCategories = db.ProductCategories_Context.Find(id);
-            db.ProductCategories_Context.Remove(productCategories);
+
+            var ProductCatDetails = db.ProductCategories_Context.Find(id);
+            ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
+            db.ProductCategories_Context.Remove(ProductCatDetails);
             db.SaveChanges();
             return RedirectToAction("Index");
+
         }
     }
 }

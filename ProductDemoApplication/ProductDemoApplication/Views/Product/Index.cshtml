@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductDemoApplication.Models.Products>
+﻿@model IEnumerable<ProductDemoApplication.Models.ProductCreateEditModel>
 
 @{
     ViewBag.Title = "Index";
@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ProductCategoryId)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCategories)
+        </th>
         <th></th>
     </tr>
 
@@ -44,7 +47,10 @@
             @Html.DisplayFor(modelItem => item.DateUpdated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductCatego)
+            @Html.DisplayFor(modelItem => item.ProductCategoryId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCategories)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
