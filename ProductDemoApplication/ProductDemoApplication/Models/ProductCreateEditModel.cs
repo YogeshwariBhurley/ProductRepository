@@ -21,11 +21,13 @@ namespace ProductDemoApplication.Models
         public double Rate { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
+        public string ProductCategoryName { get; set; }
         //Navigation properties
         //public int ProductCategoryId { get; set; }
-        public int ProductCategoryId { get; set; }
-        public string ProductCategoryName { get; set; }
-        public virtual List<ProductCategoryCreateEditModel> ProductCategories { get; set; }
+        public int ProductCategoryId{ get; set; }
+        
+
+        public virtual Entities.ProductCategories ProductCategories { get; set; }
+
     }
 }

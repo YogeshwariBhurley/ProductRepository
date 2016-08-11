@@ -25,7 +25,8 @@ namespace ProductDemoApplication.Entities
         //Navigation properties
         //public int ProductCategoryId { get; set; }
         public int ProductCategoryId { get; set; }
-        public virtual List<ProductCategories> ProductCategories { get; set; }
+        //  public virtual List<ProductCategories> ProductCategories { get; set; }
+        public virtual ProductCategories ProductCategories { get; set; }
 
     }
 }

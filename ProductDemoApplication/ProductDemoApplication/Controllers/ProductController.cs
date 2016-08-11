@@ -20,9 +20,9 @@ namespace ProductDemoApplication.Controllers
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-            
+        
 
-           var product = from Products in db.Product_Context select Products;
+            var product = from Products in db.Product_Context select Products;
             var prods = new List<ProductCreateEditModel>();
             if (product.Any())
             {
@@ -38,7 +38,7 @@ namespace ProductDemoApplication.Controllers
         public ActionResult Create()
         {
             var p = new Products();
-            p.ProductCategories = db.ProductCategories_Context.ToList();
+            //p.ProductCategories = db.ProductCategories_Context.ToList();
             return View(p);
         }
         [HttpPost]
@@ -50,7 +50,7 @@ namespace ProductDemoApplication.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            objProducts.ProductCategories = db.ProductCategories_Context.ToList();
+            //objProducts.ProductCategories = db.ProductCategories_Context.ToList();
             return View(objProducts);         
         }
         public ActionResult Edit(int ?id)
