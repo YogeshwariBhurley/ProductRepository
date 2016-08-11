@@ -70,8 +70,8 @@ namespace ProductDemoApplication.Controllers
         public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] ProductCategoryCreateEditModel objProductCategory)
         {
 
-            //var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
-            db.Entry(objProductCategory).State = EntityState.Modified;
+            var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
+            db.Entry(prodModel).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -86,18 +86,18 @@ namespace ProductDemoApplication.Controllers
         }
         public ActionResult Delete(int? id)
         {
+          
 
-            var ProductCatDetails = db.ProductCategoryCreateEditModels.Find(id);
-            var prod = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(ProductCatDetails);
+            var ProductCatDetails = db.ProductCategories_Context.Find(id);
+            var prod = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
             return View(prod);
         }
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-
-            var ProductCatDetails = db.ProductCategoryCreateEditModels.Find(id);
-         
-            db.ProductCategoryCreateEditModels.Remove(ProductCatDetails);
+          
+            var ProductCatDetails = db.ProductCategories_Context.Find(id);       
+            db.ProductCategories_Context.Remove(ProductCatDetails);
             db.SaveChanges();
             return RedirectToAction("Index");
 
