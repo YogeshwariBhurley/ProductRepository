@@ -27,7 +27,7 @@ namespace ProductDemoApplication.Models
         public int ProductCategoryId{ get; set; }
         
 
-        public virtual Entities.ProductCategories ProductCategories { get; set; }
+        public virtual Entities.ProductCategories ProductCategoy { get; set; }
 
     }
 }

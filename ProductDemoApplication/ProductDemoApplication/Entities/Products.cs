@@ -26,7 +26,7 @@ namespace ProductDemoApplication.Entities
         //public int ProductCategoryId { get; set; }
         public int ProductCategoryId { get; set; }
         //  public virtual List<ProductCategories> ProductCategories { get; set; }
-        public virtual ProductCategories ProductCategories { get; set; }
+        public virtual ProductCategories ProductCategory { get; set; }
 
     }
 }
