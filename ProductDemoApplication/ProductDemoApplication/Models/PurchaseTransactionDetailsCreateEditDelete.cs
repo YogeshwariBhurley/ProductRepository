@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 
 using System.ComponentModel.DataAnnotations;
+using ProductDemoApplication.Entities;
 
-namespace ProductDemoApplication.Entities
+namespace ProductDemoApplication.Models
 {
-    public class PurchaseTransactionDetails
+    public class PurchaseTransactionDetailsCreateEditDelete
     {
         public int Id { get; set; }
         [Required]

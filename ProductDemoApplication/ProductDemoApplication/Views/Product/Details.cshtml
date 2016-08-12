@@ -1,4 +1,4 @@
-﻿@model ProductDemoApplication.Models.Products
+﻿@model ProductDemoApplication.Models.ProductCreateEditModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,9 +7,11 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Products</h4>
+    <h4>ProductCreateEditModel</h4>
     <hr />
     <dl class="dl-horizontal">
+       
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -43,11 +45,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ProductCategoryId)
+            @Html.DisplayNameFor(model => model.ProductCategoryName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductCategoryId)
+            @Html.DisplayFor(model => model.ProductCategoryName)
         </dd>
 
     </dl>

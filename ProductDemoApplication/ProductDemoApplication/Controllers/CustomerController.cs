@@ -8,95 +8,130 @@ using ProductDemoApplication.Context;
 using ProductDemoApplication.Models;
 using System.Net;
 using System.Data.Entity;
+using AutoMapper;
 namespace ProductDemoApplication.Controllers
 {
     public class CustomerController : Controller
     {
-        // GET: Customer
+
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-            return View(db.Customer_Context.ToList());
+            try
+            {
+                var cusotmer = from Customers in db.Customer_Context select Customers;
+                var custs = new List<CustomoerCreateEditModel>();
+                if (cusotmer.Any())
+                {
+                    foreach (var cust in cusotmer)
+                    {
+                        CustomoerCreateEditModel custModel = Mapper.Map<Customers, CustomoerCreateEditModel>(cust);
+                        custs.Add(custModel);
+                    }
+                }
+                return View(custs);
+            }
+            catch
+            {
+                return View();
+            }
+
         }
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Customers objCustomers)
+        public ActionResult Create(CustomoerCreateEditModel objCustomers)
         {
-
-            if (ModelState.IsValid)
+            try
             {
-                db.Customer_Context.Add(objCustomers);
-
+                var custModel = Mapper.Map<CustomoerCreateEditModel, Customers>(objCustomers);
+                db.Customer_Context.Add(custModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(objCustomers);
+            catch
+            {
+                return View();
+            }
         }
 
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var custDetails = db.Customer_Context.Find(id);
+                var prodModel = Mapper.Map<Customers, CustomoerCreateEditModel>(custDetails);
+                return View(prodModel);
             }
-            Customers customers = db.Customer_Context.Find(id);
+            catch
+            {
+                return View();
+            }
 
-            if (customers == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customers);
         }
         [HttpPost]
-        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] Customers objCustomers)
+        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] CustomoerCreateEditModel objCustomers)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(objCustomers).State = EntityState.Modified;
+                var custModel = Mapper.Map<CustomoerCreateEditModel, Customers>(objCustomers);
+                db.Entry(custModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(objCustomers);
+            catch
+            {
+                return View();
+            }
+
         }
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var CustDetails = db.Customer_Context.Find(id);
+                CustomoerCreateEditModel custModel = Mapper.Map<Customers, CustomoerCreateEditModel>(CustDetails);
+                return View(custModel);
+            }
+            catch
+            {
+                return View();
             }
 
-            Customers customer = db.Customer_Context.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer);
+
         }
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var custDetails = db.Customer_Context.Find(id);
+                var cust = Mapper.Map<Customers, CustomoerCreateEditModel>(custDetails);
+                return View(cust);
             }
-            Customers customer = db.Customer_Context.Find(id);
-            if (customer == null)
+            catch
             {
-                return HttpNotFound();
+                return View();
             }
-            return View(customer);
+
         }
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Customers customer = db.Customer_Context.Find(id);
-            db.Customer_Context.Remove(customer);
+            try
+            {
+                var custDetails = db.Customer_Context.Find(id);
+                db.Customer_Context.Remove(custDetails);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
 
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
         }
     }
 }

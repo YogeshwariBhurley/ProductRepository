@@ -16,104 +16,132 @@ namespace ProductDemoApplication.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
+       
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
-        
-
-            var product = from Products in db.Product_Context select Products;
-            var prods = new List<ProductCreateEditModel>();
-            if (product.Any())
+            try
             {
-                foreach (var prod in product)
+                var product = from Products in db.Product_Context select Products;
+                var prods = new List<ProductCreateEditModel>();
+                if (product.Any())
                 {
-                    // ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(prod);
-                    ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(prod);
-                    prods.Add(prodModel);
+                    foreach (var prod in product)
+                    {
+                        ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(prod);
+                        prods.Add(prodModel);
+                    }
                 }
+                return View(prods);
             }
-            return View(prods);
+            catch
+            {
+                return ViewBag();
+            }
+            
         }
         public ActionResult Create()
         {
-            var p = new Products();
-            //p.ProductCategories = db.ProductCategories_Context.ToList();
-            return View(p);
+            try
+            {
+                ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+           
         }
         [HttpPost]
-        public ActionResult Create(Products objProducts)
+        public ActionResult Create(ProductCreateEditModel objProduct)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Product_Context.Add(objProducts);
+                var prodModel = Mapper.Map<ProductCreateEditModel, Products>(objProduct);
+                db.Product_Context.Add(prodModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //objProducts.ProductCategories = db.ProductCategories_Context.ToList();
-            return View(objProducts);         
+            catch
+            {
+                return View();
+            }
         }
         public ActionResult Edit(int ?id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                var prodDetails = db.Product_Context.Find(id);
+                var prodModel = Mapper.Map<Products, ProductCreateEditModel>(prodDetails);
+                return View(prodModel);
             }
-            Products products = db.Product_Context.Find(id);
-            if (products == null)
+            catch
             {
-                return HttpNotFound();
-            }
-            ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name", products.ProductCategoryId);
-            return View(products);
+                return View();
+            }      
         }
 
         [HttpPost]
-        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] Products products)
+        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] ProductCreateEditModel objProduct)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(products).State = EntityState.Modified;
+                var prodModel = Mapper.Map<ProductCreateEditModel, Products>(objProduct);
+                db.Entry(prodModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name", products.ProductCategoryId);
-
-            return View(products);
+            catch
+            {
+                return View();
+            }
+            
         }
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var ProductDetails = db.Product_Context.Find(id);
+                ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(ProductDetails);
+                return View(prodModel);
             }
-            Products products = db.Product_Context.Find(id);
-            if (products == null)
+            catch
             {
-                return HttpNotFound();
+                return View();
             }
-            return View(products);
+           
         }
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var ProductDetails = db.Product_Context.Find(id);
+                var prod = Mapper.Map<Products, ProductCreateEditModel>(ProductDetails);
+                return View(prod);
             }
-            Products products = db.Product_Context.Find(id);
-            if (products == null)
+            catch
             {
-                return HttpNotFound();
+                return View();
             }
-            return View(products);
+          
         }
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Products products = db.Product_Context.Find(id);
-            db.Product_Context.Remove(products);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                var ProductDetails = db.Product_Context.Find(id);
+                db.Product_Context.Remove(ProductDetails);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            } 
+           
         }
 
     }

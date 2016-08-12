@@ -19,8 +19,10 @@ namespace ProductDemoApplication.AutomapperCode
                 cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
                 cfg.CreateMap<Products, ProductCreateEditModel>();
                 cfg.CreateMap<ProductCreateEditModel, Products>();
-              
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
             });
+            
         }
     }
 }

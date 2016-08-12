@@ -196,10 +196,13 @@
       <DependentUpon>201608100222018_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CustomerListModel.cs" />
+    <Compile Include="Models\CustomoerCreateEditModel.cs" />
     <Compile Include="Models\ProductCategoryCreateEditModel.cs" />
     <Compile Include="Models\ProductCategoryListModel.cs" />
     <Compile Include="Models\ProductCreateEditModel.cs" />
     <Compile Include="Models\ProductListModel.cs" />
+    <Compile Include="Models\PurchaseTransactionDetailsCreateEditDelete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

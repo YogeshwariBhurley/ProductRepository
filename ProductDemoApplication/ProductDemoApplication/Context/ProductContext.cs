@@ -23,5 +23,7 @@ namespace ProductDemoApplication.Context
         public System.Data.Entity.DbSet<ProductDemoApplication.Models.ProductCategoryListModel> ProductCategoryListModels { get; set; }
 
         public System.Data.Entity.DbSet<ProductDemoApplication.Models.ProductCreateEditModel> ProductCreateEditModels { get; set; }
+
+        public System.Data.Entity.DbSet<ProductDemoApplication.Models.CustomoerCreateEditModel> CustomoerCreateEditModels { get; set; }
     }
 }
