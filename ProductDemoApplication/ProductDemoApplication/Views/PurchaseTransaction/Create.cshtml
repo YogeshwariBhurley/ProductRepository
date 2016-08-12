@@ -1,9 +1,77 @@
-﻿@model ProductDemoApplication.Models.PurchaseTransactionSummeries
+﻿@model ProductDemoApplication.Models.PurchaseTransactionDetailsCreateEditDelete
 
 @{
     ViewBag.Title = "Create";
 }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+   
+    function FillProduct() {
+        $("#txtRate").val("");
+            var ProdId = $("#ProductCat").val();
+            $.ajax({
+                url: '/PurchaseTransaction/FillProduct',
+                type: "GET",
+                dataType: "JSON",
+                data: { Product: ProdId },
+                success: function (categories) {
+                    $("#Product").html("");
+                    $.each(categories, function (i, category) {
+                        $("#Product").append(
+                            $('<option></option').val(category.Id).html(category.Name));
+                       
+                    });
+                }
+            });
+        }
 
+        function FillText() {
+            var ProdCatId = $("#Product").val();
+           
+            $.ajax({
+                url: '/PurchaseTransaction/FillText',
+                type: "GET",
+                datatype: "JSON",
+                data: { prodctCat: ProdCatId },
+                success: function (products) {
+                  
+                    $("#txtRate").html("");
+                    $.each(products, function (i, product) {
+                        $("#txtRate").val(product.Rate);
+                    });
+
+                }
+            });
+        }
+        $(document).ready(function () {
+            $("#btnAddProduct").click(function () {
+                CreateProductTable();
+            });
+            function CreateProductTable() {
+              
+                $("#ProductArea").html("");
+                var table = $("<table id=tblProduct></table>").appendTo("#ProductArea");
+                var rowHeadings = $("<tr></tr>").appendTo(table);
+                
+                $("<td></td>").text("Product Name").appendTo(rowHeadings);
+                $("<td></td>").text("Rate").appendTo(rowHeadings);
+                $("<td></td>").text("Quantity").appendTo(rowHeadings);
+
+                $.get('/PurchaseTransaction/GetProductData', function (data) {
+                    $.each(data,function(i,value){
+                    var row=$("<tr></tr>").appendTo(table);
+                       
+                    $("<td></td>").text(value.ProductId).appendTo(row);
+                    $("<td></td>").text(value.Rate).appendTo(row);
+                    $("<td></td>").text(value.Quantity).appendTo(row);
+                    });
+                });
+
+
+            }
+        });
+       
+</script>
 <h2>Create</h2>
 
 
@@ -12,37 +80,74 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>PurchaseTransactionSummeries</h4>
+        <h4>PurchaseTransactionDetailsCreateEditDelete</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PurchaseTransactionSummaryId", null, htmlAttributes: new { @class = "form-control" })
+
+
+                
+                @Html.ValidationMessageFor(model => model.PurchaseTransactionSummaryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Product Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProductCategoryId", null,"---Select Category---", htmlAttributes: new { @class = "form-control",@onchange="FillProduct()", @Id = "ProductCat" })
+                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+      
+            @Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProductId", new SelectList(Enumerable.Empty<SelectListItem>(),"Id","Name"),"---Select Product---", htmlAttributes: new { @class = "form-control",@Id="Product",@onchange="FillText()" })
+                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control",@Id="txtRate"} })
+                @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" ,@Id="txtQty"} })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+
+       
+
        
 
         <div class="form-group">
-            @Html.LabelFor(model => model.customerId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.customerId, new SelectList(Model.customer, "Id", "Name", Model.customer.First().Id), new { @class = "form-control", @id = "ddlCustName" })
-                @Html.ValidationMessageFor(model => model.customerId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Category", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-              @*  @Html.DropDownList("Category","Id","Name",new { @class = "form-control", @id = "ddlCustName" })*@
-               
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" value="Add Product" class="btn btn-success" id="btnAddProduct" />
             </div>
+        </div>
+        <div id="ProductArea" class="table">
+
         </div>
     </div>
 }
 
-<div>
+@*<div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

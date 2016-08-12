@@ -16,6 +16,6 @@ namespace ProductDemoApplication.Models
         //Navigation Properties
         [Required]
         public int customerId { get; set; }
-        public virtual List<Customers> customer { get; set; }
+        public virtual Customers customer { get; set; }
     }
 }

@@ -18,6 +18,9 @@ namespace ProductDemoApplication.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
+        public string CustomerName { get; set; }
+        public string ProductCategoryName { get; set; }
+
         //Navigation Properties
         [Required]
         public int PurchaseTransactionSummaryId { get; set; }
