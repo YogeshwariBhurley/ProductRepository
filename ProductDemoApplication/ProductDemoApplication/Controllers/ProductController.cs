@@ -58,11 +58,16 @@ namespace ProductDemoApplication.Controllers
         {
             try
             {
-                var prodModel = Mapper.Map<ProductCreateEditModel, Products>(objProduct);
-                db.Product_Context.Add(prodModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    var prodModel = Mapper.Map<ProductCreateEditModel, Products>(objProduct);
+                    db.Product_Context.Add(prodModel);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name",objProduct.ProductCategoryId);
+                return View(objProduct);
+            }             
             catch
             {
                 return View();
@@ -74,7 +79,12 @@ namespace ProductDemoApplication.Controllers
             {
                 ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
                 var prodDetails = db.Product_Context.Find(id);
+                if (prodDetails == null)
+                {
+                    return HttpNotFound();
+                }
                 var prodModel = Mapper.Map<Products, ProductCreateEditModel>(prodDetails);
+                ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name",prodDetails.ProductCategoryId);
                 return View(prodModel);
             }
             catch
