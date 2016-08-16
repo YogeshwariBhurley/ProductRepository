@@ -16,7 +16,7 @@ namespace ProductDemoApplication.Models
             DateUpdated = DateTime.Now;
         }
         public int Id { get; set; }
-        [Required]
+       
         public string Name { get; set; }
         [Required]
         public double Rate { get; set; }

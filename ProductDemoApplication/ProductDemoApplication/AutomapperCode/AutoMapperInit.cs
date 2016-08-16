@@ -21,6 +21,10 @@ namespace ProductDemoApplication.AutomapperCode
                 cfg.CreateMap<ProductCreateEditModel, Products>();
                 cfg.CreateMap<Customers, CustomoerCreateEditModel>();
                 cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+                cfg.CreateMap<PurchaseTransactionDetailsCreateEditDelete, PurchaseTransactionDetails>();
+                cfg.CreateMap<PurchaseTransactionDetails, PurchaseTransactionDetailsCreateEditDelete>();
+                cfg.CreateMap<PurchaseTransactionSummeries, PurchaseTransactionSummeriesCreateEdit>();
+                cfg.CreateMap<PurchaseTransactionSummeriesCreateEdit, PurchaseTransactionSummeries>();
             });
             
         }

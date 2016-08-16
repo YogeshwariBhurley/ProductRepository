@@ -9,6 +9,11 @@ namespace ProductDemoApplication.Entities
 {
     public class PurchaseTransactionDetails
     {
+        public PurchaseTransactionDetails()
+        {
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
+        }
         public int Id { get; set; }
         [Required]
         public double Rate { get; set; }
@@ -22,7 +27,7 @@ namespace ProductDemoApplication.Entities
         public int PurchaseTransactionSummaryId { get; set; }
         [Required]
         public int ProductId { get; set; }
-        public Products Product { get; set; }
+        public virtual Products Product { get; set; }
 
     }
 }

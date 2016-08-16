@@ -9,6 +9,11 @@ namespace ProductDemoApplication.Models
 {
     public class PurchaseTransactionSummeries
     {
+        public PurchaseTransactionSummeries()
+        {
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
+        }
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }

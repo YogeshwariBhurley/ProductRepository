@@ -203,6 +203,8 @@
     <Compile Include="Models\ProductCreateEditModel.cs" />
     <Compile Include="Models\ProductListModel.cs" />
     <Compile Include="Models\PurchaseTransactionDetailsCreateEditDelete.cs" />
+    <Compile Include="Models\PurchaseTransactionList.cs" />
+    <Compile Include="Models\PurchaseTransactionSummeriesCreateEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

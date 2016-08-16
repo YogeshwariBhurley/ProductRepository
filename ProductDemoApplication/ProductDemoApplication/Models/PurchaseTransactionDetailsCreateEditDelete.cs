@@ -10,23 +10,29 @@ namespace ProductDemoApplication.Models
 {
     public class PurchaseTransactionDetailsCreateEditDelete
     {
+        public PurchaseTransactionDetailsCreateEditDelete()
+        {
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
+        }
         public int Id { get; set; }
         [Required]
         public double Rate { get; set; }
-        [Required]
+       [Required]
         public int Quantity { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
         public string CustomerName { get; set; }
         public string ProductCategoryName { get; set; }
+        public string ProductName { get; set; }
 
         //Navigation Properties
-        [Required]
+       [Required]
         public int PurchaseTransactionSummaryId { get; set; }
-        [Required]
+      [Required]
         public int ProductId { get; set; }
-        public Products Product { get; set; }
+        public virtual Products Product { get; set; }
 
     }
 }
