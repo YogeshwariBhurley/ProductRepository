@@ -31,7 +31,7 @@ namespace ProductDemoApplication.Models
         //Navigation Properties
         [Required]
         public int PurchaseTransactionSummaryId { get; set; }
-        [Required]
+     
         public int ProductId { get; set; }
         public virtual Products Product { get; set; } 
         public int customerId { get; set; }

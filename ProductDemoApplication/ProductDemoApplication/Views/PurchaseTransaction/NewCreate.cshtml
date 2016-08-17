@@ -96,8 +96,8 @@ tr.d0 td{
 
                 @Html.DropDownList("ProductId", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "---Select Product---", htmlAttributes: new { @class = "form-control", @Id = "Product", @onchange = "FillText()" })
 
-                @Html.Hidden("Product")
-                @*@Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control" })*@
+                
+               
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -167,9 +167,9 @@ tr.d0 td{
                         </td>*@
                 </tr>
             }
-            @*<tr>
+            <tr>
                 <td><input type="submit" value="SaveProduct" class="btn btn-default" id="btnSaveProduct" name="command" /></td>
-            </tr>*@
+            </tr>
         }
     </table>
    
