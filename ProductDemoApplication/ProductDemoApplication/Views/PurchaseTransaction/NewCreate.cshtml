@@ -75,10 +75,7 @@ tr.d0 td{
             @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.DropDownList("CustomerId", null, "---Select Customer---", htmlAttributes: new { @class = "form-control" })
-
-
-                @*  @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownList("CustomerId", null, "---Select Customer---", htmlAttributes: new { @class = "form-control" })             
                 @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -88,9 +85,7 @@ tr.d0 td{
             <div class="col-md-10">
 
                 @Html.DropDownList("ProductCategoryName", null, "---Select Product Category---", htmlAttributes: new { @class = "form-control", @onchange = "FillProduct()", @Id = "ProductCat" })
-
-
-                @* @Html.EditorFor(model => model.ProductCategoryName, new { htmlAttributes = new { @class = "form-control" } })*@
+           
                 @Html.ValidationMessageFor(model => model.ProductCategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -101,7 +96,7 @@ tr.d0 td{
 
                 @Html.DropDownList("ProductId", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "---Select Product---", htmlAttributes: new { @class = "form-control", @Id = "Product", @onchange = "FillText()" })
 
-                @Html.HiddenFor(model=>model.ProductId)
+                @Html.Hidden("Product")
                 @*@Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
@@ -111,7 +106,7 @@ tr.d0 td{
             @Html.LabelFor(model => model.Rate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control", @Id = "txtRate" } })    
-                @*  @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control" } })*@
+               
                 @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -123,18 +118,7 @@ tr.d0 td{
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
        </div>
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.PurchaseTransactionSummaryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-               @* @Html.EditorFor(model => model.PurchaseTransactionSummaryId, new { htmlAttributes = new { @class = "form-control" ,@value= ViewBag.PurchaseTransactionSummaryId } })*@
-           
-                @*@Html.TextBox("txtPurchaseTransactionSummaryId", (int)ViewBag.PurchaseTransactionSummaryId)
-                     @Html.ValidationMessageFor(model => model.PurchaseTransactionSummaryId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-
-
+     
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="AddProduct" class="btn btn-success" id="btnAddProduct" name="command" />
@@ -183,9 +167,9 @@ tr.d0 td{
                         </td>*@
                 </tr>
             }
-            <tr>
-                <td><input type="submit" value="SaveProduct" class="btn btn-success" id="btnSaveProduct" name="command" /></td>
-            </tr>
+            @*<tr>
+                <td><input type="submit" value="SaveProduct" class="btn btn-default" id="btnSaveProduct" name="command" /></td>
+            </tr>*@
         }
     </table>
    
