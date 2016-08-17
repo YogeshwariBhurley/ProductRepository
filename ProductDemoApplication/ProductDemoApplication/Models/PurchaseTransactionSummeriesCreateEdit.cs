@@ -17,9 +17,8 @@ namespace ProductDemoApplication.Models
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
-       
-
+        public string CustomerName { get; set; }
+   
         //Navigation Properties
         [Required]
         public int customerId { get; set; }

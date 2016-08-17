@@ -27,5 +27,7 @@ namespace ProductDemoApplication.Context
         public System.Data.Entity.DbSet<ProductDemoApplication.Models.CustomoerCreateEditModel> CustomoerCreateEditModels { get; set; }
 
         public System.Data.Entity.DbSet<ProductDemoApplication.Models.PurchaseTransactionDetailsCreateEditDelete> PurchaseTransactionDetailsCreateEditDeletes { get; set; }
+
+        public System.Data.Entity.DbSet<ProductDemoApplication.Models.PurchaseTransaction> PurchaseTransactions { get; set; }
     }
 }

@@ -16,6 +16,8 @@ namespace ProductDemoApplication.Controllers
     public class PurchaseTransactionController : Controller
     {
         // GET: PurchaseTransaction
+        public static DataTable dtGrid = new DataTable();
+
         ProductContext db = new ProductContext();
         public ActionResult Index()
         {
@@ -24,14 +26,11 @@ namespace ProductDemoApplication.Controllers
         }
         public ActionResult Create()
         {
-
-            // ViewBag.ProductId = new SelectList(db.Product_Context, "Id", "Name");
-            ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
+            // ViewBag.ProductId = new SelectList(db.Product_Context, "Id", "Name");      
+            ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
+            //ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
             ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
             return View();
-
-
-
         }
         public ActionResult FillProduct(int product)
         {
@@ -54,12 +53,77 @@ namespace ProductDemoApplication.Controllers
             return Json(objPurchaseList, JsonRequestBehavior.AllowGet);
 
         }
-        public static DataTable dtGrid = new DataTable();
+
+
+        public ActionResult NewCreate()
+        {
+            ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
+           // ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
+           ViewBag.ProductCategoryName=new SelectList(db.ProductCategories_Context, "Id", "Name");
+            return View();
+
+        }
+        [HttpPost]
+
+        public ActionResult NewCreate(FormCollection frm, PurchaseTransaction objProd)
+        {
+            if (frm["Command"] == "AddProduct")
+            {
+                PurchaseTransaction objPT = new PurchaseTransaction();
+                objPT.customerId = Convert.ToInt32(frm["CustomerId"]);
+                objProd.ProductCategoryId = Convert.ToInt32(frm["ProductCategoryId"]);
+
+               // string ProuductName=frm([""])
+                int ProductId = Convert.ToInt32(frm["ProductId"]);              
+                int Quantity = Convert.ToInt32(frm["Quantity"]);
+                decimal Rate = Convert.ToInt32(frm["Rate"]);
+                int CustomerId = Convert.ToInt32(frm["CustomerId"]);
+
+                if (dtGrid.Columns.Count < 1)
+                {
+                    dtGrid.Columns.Add("CustomerId",typeof(int));
+                    dtGrid.Columns.Add("ProductId", typeof(int));
+                    dtGrid.Columns.Add("Quantity", typeof(int));
+                    dtGrid.Columns.Add("Rate", typeof(decimal));
+                }
+                dtGrid.Rows.Add(CustomerId,ProductId, Quantity, Rate);
+                ViewData["data"] = dtGrid;
+                ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
+                ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var prodModel = Mapper.Map<PurchaseTransaction,PurchaseTransactionDetails>(objProd);
+                        db.PurchaseTransactionDetails_Context.Add(prodModel);
+                        var ProdModelCust = Mapper.Map<PurchaseTransaction, PurchaseTransactionSummeries>(objProd);
+                        // var ProdModelCust = Mapper.Map<PurchaseTransactionDetailsCreateEditDelete,PurchaseTransactionSummeriesCreateEdit>(objPS);
+                        db.PurchaseTransactionSummery_Context.Add(ProdModelCust);
+
+                        db.SaveChanges();
+                    }
+                    ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
+                    //  ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
+                    ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                    return View(objProd);
+                }
+                catch
+                {
+                    return View();
+                }
+
+
+            }
+            return View();
+        }
+
+
+       
         [HttpPost, ActionName("Create")]
         public ActionResult Create(FormCollection frm, PurchaseTransactionDetailsCreateEditDelete objProd)
 
         {
-            // = new PurchaseTransactionDetailsCreateEditDelete();
+          
 
             if (frm["Command"] == "AddProduct")
             {
@@ -67,6 +131,7 @@ namespace ProductDemoApplication.Controllers
                 PurchaseTransactionSummeriesCreateEdit objPS = new PurchaseTransactionSummeriesCreateEdit();
 
                 int ProductId = Convert.ToInt32(frm["ProductId"]);
+               // string ProductName = (frm["ProductName)"]).ToString();
                 int Quantity = Convert.ToInt32(frm["Quantity"]);
                 decimal Rate = Convert.ToInt32(frm["Rate"]);
                 if (dtGrid.Columns.Count < 1)
@@ -77,8 +142,7 @@ namespace ProductDemoApplication.Controllers
                 }
                 dtGrid.Rows.Add(ProductId, Quantity, Rate);
                 ViewData["data"] = dtGrid;
-                ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
-                ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                
                 try
                 {
                     if (ModelState.IsValid)
@@ -91,22 +155,16 @@ namespace ProductDemoApplication.Controllers
 
                         db.SaveChanges();
                     }
-                    return View(objProd);
+                    ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
+                    //  ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
+                    ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                    return View(objProd);                
                 }
                 catch
                 {
                     return View();
-                }
-
-              
-
+                }              
             }
-            
-            
-
-
-
-
             return View();
 
             //if (frm["Command"] == "Update")
@@ -163,8 +221,6 @@ namespace ProductDemoApplication.Controllers
 
             //    return View(objPT);
             //}
-
-
         }
     }
 }

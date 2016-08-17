@@ -8,17 +8,12 @@ using ProductDemoApplication.Entities;
 
 namespace ProductDemoApplication.Models
 {
-    public class PurchaseTransactionDetailsCreateEditDelete
+    public class PurchaseTransaction
     {
-        public PurchaseTransactionDetailsCreateEditDelete()
-        {
-            DateCreated = DateTime.Now;
-            DateUpdated = DateTime.Now;
-        }
         public int Id { get; set; }
         [Required]
         public double Rate { get; set; }
-       [Required]
+        [Required]
         public int Quantity { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
@@ -26,22 +21,17 @@ namespace ProductDemoApplication.Models
         public string CustomerName { get; set; }
         public string ProductCategoryName { get; set; }
         public string ProductName { get; set; }
-      //  public int Id { get; set; }
-       // public DateTime DateCreated { get; set; }
-       // public DateTime DateUpdated { get; set; }
-       // public string CustomerName { get; set; }
-
-        //Navigation Properties
-        [Required]
-        public int customerId { get; set; }
-        public virtual Customers customer { get; set; }
 
         //Navigation Properties
         [Required]
         public int PurchaseTransactionSummaryId { get; set; }
-      [Required]
+        [Required]
         public int ProductId { get; set; }
         public virtual Products Product { get; set; }
+        public int customerId { get; set; }
+        public virtual Customers customer { get; set; }
 
+        public int ProductCategoryId{get;set;}
+        public virtual ProductCategories ProductCategory { get; set; }
     }
 }

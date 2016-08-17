@@ -36,7 +36,7 @@ namespace ProductDemoApplication.Controllers
             }
             catch
             {
-                return ViewBag();
+                return View();
             }
             
         }

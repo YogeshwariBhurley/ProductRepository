@@ -202,6 +202,7 @@
     <Compile Include="Models\ProductCategoryListModel.cs" />
     <Compile Include="Models\ProductCreateEditModel.cs" />
     <Compile Include="Models\ProductListModel.cs" />
+    <Compile Include="Models\PurchaseTransaction.cs" />
     <Compile Include="Models\PurchaseTransactionDetailsCreateEditDelete.cs" />
     <Compile Include="Models\PurchaseTransactionList.cs" />
     <Compile Include="Models\PurchaseTransactionSummeriesCreateEdit.cs" />
@@ -279,6 +280,7 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\PurchaseTransaction\Create.cshtml" />
+    <Content Include="Views\PurchaseTransaction\NewCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

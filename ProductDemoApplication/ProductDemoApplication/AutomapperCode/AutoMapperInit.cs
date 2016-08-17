@@ -25,6 +25,11 @@ namespace ProductDemoApplication.AutomapperCode
                 cfg.CreateMap<PurchaseTransactionDetails, PurchaseTransactionDetailsCreateEditDelete>();
                 cfg.CreateMap<PurchaseTransactionSummeries, PurchaseTransactionSummeriesCreateEdit>();
                 cfg.CreateMap<PurchaseTransactionSummeriesCreateEdit, PurchaseTransactionSummeries>();
+
+                cfg.CreateMap<PurchaseTransaction, PurchaseTransactionDetails>();
+                cfg.CreateMap<PurchaseTransactionDetails, PurchaseTransaction>();
+                cfg.CreateMap<PurchaseTransaction, PurchaseTransactionSummeries>();
+                cfg.CreateMap<PurchaseTransactionSummeries, PurchaseTransaction>();
             });
             
         }

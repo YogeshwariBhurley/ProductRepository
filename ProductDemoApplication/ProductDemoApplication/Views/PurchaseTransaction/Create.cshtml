@@ -1,9 +1,5 @@
 ﻿@model ProductDemoApplication.Models.PurchaseTransactionDetailsCreateEditDelete
 
-@{
-    ViewBag.Title = "Create";
-}
-
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
    
@@ -107,7 +103,6 @@
         
 </script>
 <h2>Create</h2>
-
 <style type="text/css">
    .web_dialog_overlay {
         position: fixed;
@@ -182,18 +177,18 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>PurchaseTransactionDetailsCreateEditDelete</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("PurchaseTransactionSummaryId", null, "---Select Customer---", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("CustomerName", null, "---Select Customer---", htmlAttributes: new { @class = "form-control" })
 
-
+               @* @Html.HiddenFor(model=>model.)*@
                 
-                @Html.ValidationMessageFor(model => model.PurchaseTransactionSummaryId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -201,7 +196,7 @@
             @Html.Label("Product Category", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ProductCategoryId",null, "---Select Product Category---", htmlAttributes: new { @class = "form-control",@onchange="FillProduct()", @Id = "ProductCat" })
-               @* @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })*@
+                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -210,8 +205,8 @@
             @Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ProductId", new SelectList(Enumerable.Empty<SelectListItem>(),"Id","Name"),"---Select Product---", htmlAttributes: new { @class = "form-control",@Id="Product",@onchange="FillText()"})
-          
-                 @*@Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })*@
+                 @Html.HiddenFor(Model=>Model.ProductName)
+                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -219,7 +214,7 @@
             @Html.LabelFor(model => model.Rate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control",@Id="txtRate"} })
-                @*@Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })*@
+               @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -227,14 +222,9 @@
             @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" ,@Id="txtQty"} })
-               @* @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })*@
+               @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
-        </div>
-       
-
-       
-
-      
+        </div>  
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
