@@ -10,6 +10,11 @@ namespace ProductDemoApplication.Models
 {
     public class PurchaseTransaction
     {
+        public PurchaseTransaction()
+        {
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
+        }
         public int Id { get; set; }
         [Required]
         public double Rate { get; set; }
@@ -21,17 +26,15 @@ namespace ProductDemoApplication.Models
         public string CustomerName { get; set; }
         public string ProductCategoryName { get; set; }
         public string ProductName { get; set; }
+        public int PurchaseTransactionSummaryIdId { get; set; }
 
         //Navigation Properties
         [Required]
         public int PurchaseTransactionSummaryId { get; set; }
         [Required]
         public int ProductId { get; set; }
-        public virtual Products Product { get; set; }
+        public virtual Products Product { get; set; } 
         public int customerId { get; set; }
         public virtual Customers customer { get; set; }
-
-        public int ProductCategoryId{get;set;}
-        public virtual ProductCategories ProductCategory { get; set; }
     }
 }

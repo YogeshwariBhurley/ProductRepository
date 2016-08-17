@@ -101,7 +101,7 @@ tr.d0 td{
 
                 @Html.DropDownList("ProductId", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "---Select Product---", htmlAttributes: new { @class = "form-control", @Id = "Product", @onchange = "FillText()" })
 
-
+                @Html.HiddenFor(model=>model.ProductId)
                 @*@Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
@@ -122,12 +122,14 @@ tr.d0 td{
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
-        </div>
+       </div>
         @*<div class="form-group">
             @Html.LabelFor(model => model.PurchaseTransactionSummaryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PurchaseTransactionSummaryId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PurchaseTransactionSummaryId, "", new { @class = "text-danger" })
+               @* @Html.EditorFor(model => model.PurchaseTransactionSummaryId, new { htmlAttributes = new { @class = "form-control" ,@value= ViewBag.PurchaseTransactionSummaryId } })*@
+           
+                @*@Html.TextBox("txtPurchaseTransactionSummaryId", (int)ViewBag.PurchaseTransactionSummaryId)
+                     @Html.ValidationMessageFor(model => model.PurchaseTransactionSummaryId, "", new { @class = "text-danger" })
             </div>
         </div>*@
 
@@ -181,8 +183,12 @@ tr.d0 td{
                         </td>*@
                 </tr>
             }
+            <tr>
+                <td><input type="submit" value="SaveProduct" class="btn btn-success" id="btnSaveProduct" name="command" /></td>
+            </tr>
         }
     </table>
+   
 }
 
 @*<div>
