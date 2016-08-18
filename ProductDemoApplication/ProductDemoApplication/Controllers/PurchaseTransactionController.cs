@@ -10,6 +10,7 @@ using System.Data;
 using AutoMapper;
 using System.Data.Entity;
 using ProductDemoApplication.Entities;
+using System.Text;
 
 namespace ProductDemoApplication.Controllers
 {
@@ -26,12 +27,41 @@ namespace ProductDemoApplication.Controllers
         }
         public ActionResult Create()
         {
-            // ViewBag.ProductId = new SelectList(db.Product_Context, "Id", "Name");      
+               
             ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
-            //ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
-            ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
-            return View();
+
+            ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
+            var model = new PurchaseTransaction();
+            return View(model);
         }
+
+        [HttpPost]
+        public string Create(PurchaseTransaction objPT)
+
+        {
+
+              var sb = new StringBuilder();
+
+            //    try
+            //    {
+            //        sb.AppendFormat("PurchaseTransaction", objPT.CustomerName);
+            //        sb.AppendLine("<br/>");
+
+            //        foreach (var product in objPT.PurchaseTransactionDetails)
+            //        {
+            //            sb.AppendFormat("Product :{0}| Rate:{1} |Quantity:{2}", product.ProductId, product.Rate, product.Quantity);
+            //            sb.AppendLine("<br/>");
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw ex;
+            //    }
+               return sb.ToString();
+
+        }
+        
+           
         public ActionResult FillProduct(int product)
         {
             var categories = db.Product_Context.Where(c => c.ProductCategoryId == product);
@@ -42,6 +72,12 @@ namespace ProductDemoApplication.Controllers
             var products = from prod in db.Product_Context where prod.Id == prodctCat select prod;
             return Json(products, JsonRequestBehavior.AllowGet);
         }
+        //public ActionResult FillCategory()
+        //{
+        //    var Category = from m in db.ProductCategories_Context select m.Name;
+        //    return Json(Category, JsonRequestBehavior.AllowGet);
+
+        //}
        
 
         public ActionResult NewCreate()
@@ -143,58 +179,7 @@ namespace ProductDemoApplication.Controllers
             }
             return View();
         }
-
-
-       
-        [HttpPost, ActionName("Create")]
-        public ActionResult Create(FormCollection frm, PurchaseTransactionDetailsCreateEditDelete objProd)
-
-        {
-          
-
-            if (frm["Command"] == "AddProduct")
-            {
-                PurchaseTransactionDetailsCreateEditDelete objPT = new PurchaseTransactionDetailsCreateEditDelete();
-                PurchaseTransactionSummeriesCreateEdit objPS = new PurchaseTransactionSummeriesCreateEdit();
-
-                int ProductId = Convert.ToInt32(frm["ProductId"]);
-               // string ProductName = (frm["ProductName)"]).ToString();
-                int Quantity = Convert.ToInt32(frm["Quantity"]);
-                decimal Rate = Convert.ToInt32(frm["Rate"]);
-                if (dtGrid.Columns.Count < 1)
-                {
-                    dtGrid.Columns.Add("ProductId", typeof(int));
-                    dtGrid.Columns.Add("Quantity", typeof(int));
-                    dtGrid.Columns.Add("Rate", typeof(decimal));
-                }
-                dtGrid.Rows.Add(ProductId, Quantity, Rate);
-                ViewData["data"] = dtGrid;
-                
-                try
-                {
-                    if (ModelState.IsValid)
-                    {
-                        var prodModel = Mapper.Map<PurchaseTransactionDetailsCreateEditDelete, PurchaseTransactionDetails>(objProd);
-                        db.PurchaseTransactionDetails_Context.Add(prodModel);
-                         var ProdModelCust = Mapper.Map<PurchaseTransactionSummeriesCreateEdit, PurchaseTransactionSummeries>(objPS);
-                       // var ProdModelCust = Mapper.Map<PurchaseTransactionDetailsCreateEditDelete,PurchaseTransactionSummeriesCreateEdit>(objPS);
-                        db.PurchaseTransactionSummery_Context.Add(ProdModelCust);
-
-                        db.SaveChanges();
-                    }
-                    ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
-                    //  ViewBag.PurchaseTransactionSummaryId = new SelectList(db.Customer_Context, "Id", "Name");
-                    ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
-                    return View(objProd);                
-                }
-                catch
-                {
-                    return View();
-                }              
-            }
-            return View();
-
-         
-        }
+    
+      
     }
 }
