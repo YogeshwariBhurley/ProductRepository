@@ -27,41 +27,57 @@ namespace ProductDemoApplication.Controllers
         }
         public ActionResult Create()
         {
-               
-            ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
 
+            ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
             ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
             var model = new PurchaseTransaction();
             return View(model);
         }
 
         [HttpPost]
-        public string Create(PurchaseTransaction objPT)
+        public ActionResult Create(PurchaseTransaction objPT, FormCollection frm)
 
         {
+            PurchaseTransactionDetail objPD = new PurchaseTransactionDetail();
+            PurchaseTransactionDetails objPTD = new PurchaseTransactionDetails();
 
-              var sb = new StringBuilder();
+            try
+            {
 
-            //    try
-            //    {
-            //        sb.AppendFormat("PurchaseTransaction", objPT.CustomerName);
-            //        sb.AppendLine("<br/>");
+                foreach (var product in objPT.PurchaseTransactionDetails)
+                {
+                    objPT.customerId = Convert.ToInt32(frm["CustomerName"]);
+                    objPTD.ProductId = Convert.ToInt32(frm["ProductId"]);
 
-            //        foreach (var product in objPT.PurchaseTransactionDetails)
-            //        {
-            //            sb.AppendFormat("Product :{0}| Rate:{1} |Quantity:{2}", product.ProductId, product.Rate, product.Quantity);
-            //            sb.AppendLine("<br/>");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw ex;
-            //    }
-               return sb.ToString();
+                    var ProdModelCust = Mapper.Map<PurchaseTransaction, PurchaseTransactionSummeries>(objPT);
+                    ProdModelCust.customerId = objPT.customerId;
+                    db.PurchaseTransactionSummery_Context.Add(ProdModelCust);
+                    db.SaveChanges();
 
+                    var prodModel = Mapper.Map<PurchaseTransaction, PurchaseTransactionDetails>(objPT);
+                    prodModel.PurchaseTransactionSummaryId = ProdModelCust.Id;
+                    prodModel.Quantity = product.Quantity;
+                    prodModel.Rate = product.Rate;
+                    prodModel.ProductId = product.ProductId;
+
+                    db.PurchaseTransactionDetails_Context.Add(prodModel);
+                    db.SaveChanges();
+                }
+
+
+                ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
+
+                ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
+                return View(objPT);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return View();
+            }
         }
-        
-           
+
+
         public ActionResult FillProduct(int product)
         {
             var categories = db.Product_Context.Where(c => c.ProductCategoryId == product);
@@ -78,13 +94,13 @@ namespace ProductDemoApplication.Controllers
         //    return Json(Category, JsonRequestBehavior.AllowGet);
 
         //}
-       
+
 
         public ActionResult NewCreate()
         {
             ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
-           // ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
-           ViewBag.ProductCategoryName=new SelectList(db.ProductCategories_Context, "Id", "Name");
+            // ViewBag.ProductCategoryId = new SelectList(db.ProductCategories_Context, "Id", "Name");
+            ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
             return View();
 
         }
@@ -93,10 +109,11 @@ namespace ProductDemoApplication.Controllers
         public ActionResult NewCreate(FormCollection frm, PurchaseTransaction objProd)
         {
             if (frm["Command"] == "AddProduct")
-            {              
+            {
                 objProd.customerId = Convert.ToInt32(frm["CustomerId"]);
-             
-                int ProductId = Convert.ToInt32(frm["ProductId"]);              
+
+
+                int ProductId = Convert.ToInt32(frm["ProductId"]);
                 int Quantity = Convert.ToInt32(frm["Quantity"]);
                 decimal Rate = Convert.ToInt32(frm["Rate"]);
                 int CustomerId = Convert.ToInt32(frm["CustomerId"]);
@@ -105,24 +122,24 @@ namespace ProductDemoApplication.Controllers
 
                 if (dtGrid.Columns.Count < 1)
                 {
-                    dtGrid.Columns.Add("CustomerId",typeof(int));
+                    dtGrid.Columns.Add("CustomerId", typeof(int));
                     dtGrid.Columns.Add("ProductId", typeof(int));
                     dtGrid.Columns.Add("Quantity", typeof(int));
                     dtGrid.Columns.Add("Rate", typeof(decimal));
                 }
-                dtGrid.Rows.Add(CustomerId,ProductId, Quantity, Rate);
+                dtGrid.Rows.Add(CustomerId, ProductId, Quantity, Rate);
                 ViewData["data"] = dtGrid;
-               ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
+                ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
                 ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
                 //try
                 //{
                 //    objProd.customerId = Convert.ToInt32(frm["CustomerId"]);
-                 
+
                 //    if (ModelState.IsValid)
                 //    {
 
                 //        var ProdModelCust = Mapper.Map<PurchaseTransaction, PurchaseTransactionSummeries>(objProd);
-                        
+
                 //        db.PurchaseTransactionSummery_Context.Add(ProdModelCust);
 
                 //        db.SaveChanges();
@@ -147,7 +164,7 @@ namespace ProductDemoApplication.Controllers
             }
             if (frm["Command"] == "SaveProduct")
             {
-                
+
                 try
                 {
                     objProd.customerId = Convert.ToInt32(frm["CustomerId"]);
@@ -166,7 +183,7 @@ namespace ProductDemoApplication.Controllers
                         db.SaveChanges();
                     }
                     ViewBag.CustomerId = new SelectList(db.Customer_Context, "Id", "Name");
-                   
+
                     ViewBag.ProductCategoryName = new SelectList(db.ProductCategories_Context, "Id", "Name");
                     return View(objProd);
                 }
@@ -179,7 +196,7 @@ namespace ProductDemoApplication.Controllers
             }
             return View();
         }
-    
-      
+
+
     }
 }

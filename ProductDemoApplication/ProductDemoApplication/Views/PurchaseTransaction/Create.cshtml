@@ -47,29 +47,27 @@
         });
     }
 
-
     function addProduct() {
         @{
                 Model.PurchaseTransactionDetails.Add(new PurchaseTransactionDetail());
          }
+      
         var index = $("#tbProducts").children("tr").length;
-
-        alert($("#Product").val());
-
-        var indexCell = "<td style='display:none'><input name='PurchaseTransactionDetails.Index'  type='hidden' value='" + index + "' /></td>";
-        alert("In");
-
-        var index = $("#tbProducts").children("tr").length;
-
-        alert(index);
-
-        var ProductNameCell = "<td><input id='PurchaseTransactionDetails_" + index + "__ProductName'  name='PurchaseTransactionDetails[" + index + "].ProductId' type='text' value='' /></td>";
-        var RateCell = "<td><input id='PurchaseTransactionDetails_" + index + "__RateCell' name='PurchaseTransactionDetails[" + index + "].Rate' type='text' value='' /></td>"
-        var QuantityCell = "<td><input id='PurchaseTransactionDetails_" + index + "__QuantityCell' name='PurchaseTransactionDetails[" + index + "].Quantity' type='text' value='' /></td>";
+       
+        var ProductNamevalue = $("#Product option:selected").text();
+        var ProductRate = $("#txtRate").val();
+        var ProductQuantity = $("#txtQuantity").val();
+      
+        var indexCell = "<td style='display:none'><input name='PurchaseTransactionDetails.Index'  type='hidden' value='" + index + "' /></td>";       
+        var index = $("#tbProducts").children("tr").length;    
+        var ProductNameCell = "<td><input id='txtProduct__" + index + "__ProductName'  name='PurchaseTransactionDetails[" + index + "].ProductId' type='text' value='" + ProductNamevalue + "' /></td>";
+       
+        var RateCell = "<td><input id='txtRate_" + index + "__RateCell' name='PurchaseTransactionDetails[" + index + "].Rate' type='text' value='" + ProductRate + "' /></td>";       
+        var QuantityCell = "<td><input id='txtQuantity_" + index + "__QuantityCell' name='PurchaseTransactionDetails[" + index + "].Quantity' type='text' value='" + ProductQuantity + "' /></td>";
         var newRow = "<tr id='trProduct" + index + "'>" + indexCell + ProductNameCell + RateCell + QuantityCell + "</tr>";
-
+      
         $("#tbProducts").append(newRow);
-
+      
     }
 </script>
 
@@ -115,7 +113,7 @@
         <div class="form-group">
             @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control" ,@Id="txtQuantity"} })
             </div>
         </div>
 
@@ -130,10 +128,7 @@
 
     <table>
         <thead>
-            <tr>
-                @*<td>
-                        Product Category
-                    </td>*@
+            <tr>            
                 <td>
                     Product Name
                 </td>
