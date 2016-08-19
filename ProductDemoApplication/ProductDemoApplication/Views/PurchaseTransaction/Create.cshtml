@@ -54,17 +54,20 @@
       
         var index = $("#tbProducts").children("tr").length;
        
-        var ProductNamevalue = $("#Product option:selected").text();
+        var ProductIdvalue = $("#Product option:selected").val();
         var ProductRate = $("#txtRate").val();
         var ProductQuantity = $("#txtQuantity").val();
-      
+        var ProductNameValue = $("#Product option:selected").text();
+
         var indexCell = "<td style='display:none'><input name='PurchaseTransactionDetails.Index'  type='hidden' value='" + index + "' /></td>";       
         var index = $("#tbProducts").children("tr").length;    
-        var ProductNameCell = "<td><input id='txtProduct__" + index + "__ProductName'  name='PurchaseTransactionDetails[" + index + "].ProductId' type='text' value='" + ProductNamevalue + "' /></td>";
-       
+
+        var ProductIdvalue = "<td><input id='txtProduct__" + index + "__ProductName'  name='PurchaseTransactionDetails[" + index + "].ProductId' type='text' value='" + ProductIdvalue + "' /></td>";
+        var ProductNameValue = "<td><input id='txtProduct__" + index + "__ProductName'  name='PurchaseTransactionDetails[" + index + "].ProductId' type='text' value='" + ProductNameValue + "' /></td>";
+
         var RateCell = "<td><input id='txtRate_" + index + "__RateCell' name='PurchaseTransactionDetails[" + index + "].Rate' type='text' value='" + ProductRate + "' /></td>";       
         var QuantityCell = "<td><input id='txtQuantity_" + index + "__QuantityCell' name='PurchaseTransactionDetails[" + index + "].Quantity' type='text' value='" + ProductQuantity + "' /></td>";
-        var newRow = "<tr id='trProduct" + index + "'>" + indexCell + ProductNameCell + RateCell + QuantityCell + "</tr>";
+        var newRow = "<tr id='trProduct" + index + "'>" + indexCell + ProductIdvalue + ProductNameValue + RateCell + QuantityCell + "</tr>";
       
         $("#tbProducts").append(newRow);
       
@@ -128,7 +131,10 @@
 
     <table>
         <thead>
-            <tr>            
+            <tr>      
+                <td>
+                    Product Id
+                </td>      
                 <td>
                     Product Name
                 </td>
