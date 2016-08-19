@@ -281,6 +281,7 @@
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\PurchaseTransaction\Create.cshtml" />
     <Content Include="Views\PurchaseTransaction\NewCreate.cshtml" />
+    <Content Include="Views\PurchaseTransaction\ReportScreen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

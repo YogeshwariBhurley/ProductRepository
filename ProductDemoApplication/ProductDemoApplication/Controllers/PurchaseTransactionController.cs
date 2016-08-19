@@ -88,12 +88,40 @@ namespace ProductDemoApplication.Controllers
             var products = from prod in db.Product_Context where prod.Id == prodctCat select prod;
             return Json(products, JsonRequestBehavior.AllowGet);
         }
-        //public ActionResult FillCategory()
-        //{
-        //    var Category = from m in db.ProductCategories_Context select m.Name;
-        //    return Json(Category, JsonRequestBehavior.AllowGet);
 
-        //}
+        public ActionResult FillReport(int custId)
+        {
+
+
+            //  var Report = from m in db.PurchaseTransactionSummery_Context where m.customerId == custId select m;
+            var Report = (from m in db.PurchaseTransactionSummery_Context
+                          join n in db.PurchaseTransactionDetails_Context on new { a = m.customerId, b = m.Id } equals new { a = custId, b = n.PurchaseTransactionSummaryId }
+                          join s in db.Product_Context on n.ProductId equals s.Id
+                          join c in db.ProductCategories_Context on s.ProductCategoryId equals c.Id
+                          
+                          select new
+                          {
+                              n.PurchaseTransactionSummaryId,
+                              n.Quantity,
+                              n.Rate,
+                              s.Name,
+                              productCategoryName=c.Name
+                          }).ToList();
+
+
+
+
+            return Json(Report, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult ReportScreen()
+        {
+            ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
+            return View();
+        }
+
+
 
 
         public ActionResult NewCreate()

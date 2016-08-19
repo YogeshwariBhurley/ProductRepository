@@ -1,0 +1,62 @@
+﻿@using ProductDemoApplication.Models
+@model ProductDemoApplication.Models.PurchaseTransaction
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+    function FillReport() {
+     
+        debugger 
+        alert("Hello");
+        var CustId = $("#ddlCustomer").val();
+        $.ajax({           
+            url:'/PurchaseTransaction/FillReport',
+            type: "GET",
+            dataType: "JSON",
+            data: { custId: CustId },
+            success: function (Report) {
+                alert("success");
+                $("#Report").html("");
+                $.each(Report, function (i,report ) {                 
+                    $("#Report").append('<table class="table"><tr> <td width="5%">' + report.productCategoryName + '</td>  <td width="10%">' + report.Name + '</td> <td width="10%">' + report.Rate + '</td><td width="10%">' + report.Quantity + '</td></tr></table>');
+                    $("#tblReport").show();                  
+                });
+            },
+            error: function () {
+                alert("data not found");
+            }        
+        });
+       
+    }
+    </script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>PurchaseTransaction</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerName", null, "---Select Customer---", htmlAttributes: new { @class = "form-control" , @onchange = "FillReport()", @Id="ddlCustomer" })
+                @Html.ValidationMessageFor(model => model.customerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <table class="table" id="tblReport" style="display:none">
+            <tr>
+                @*<th width="10%">Purchase Transaction Summary Id</th>*@
+                <th width="5%">Category Name</th>
+                <th width="10%">Product Name</th>
+                <th width="10%">Rate</th>
+                <th width="10%">Quantity</th>
+            </tr>
+        </table>
+        <div id="Report">
+            
+        </div>
+</div>
+}
+
