@@ -13,6 +13,7 @@ namespace ProductDemoApplication.Servieces
    public interface IPurchaseTransactionService
     {
         PurchaseTransaction GetCreatedPurchaseTransaction(PurchaseTransaction objPT);
-        
+        List<Products> GetProduct(int product);
+        List<Products> FillRate(int prodctCat);
     }
 }

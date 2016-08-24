@@ -214,6 +214,7 @@
     <Compile Include="Models\PurchaseTransaction.cs" />
     <Compile Include="Models\PurchaseTransactionDetailsCreateEditDelete.cs" />
     <Compile Include="Models\PurchaseTransactionList.cs" />
+    <Compile Include="Models\PurchaseTransactionReport.cs" />
     <Compile Include="Models\PurchaseTransactionSummeriesCreateEdit.cs" />
     <Compile Include="Servieces\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -39,33 +39,33 @@ namespace ProductDemoApplication.Controllers
 
 
             [HttpPost]
-        public ActionResult Create(PurchaseTransaction objPT, FormCollection frm)
+        public ActionResult Create(PurchaseTransaction objPT, FormCollection frm,PurchaseTransactionService objPTS)
         {
             PurchaseTransactionDetail objPD = new PurchaseTransactionDetail();
             PurchaseTransactionDetails objPTD = new PurchaseTransactionDetails();
 
             try
             {
-               // objPTS.GetCreatedPurchaseTransaction(objPT, frm);
-                foreach (var product in objPT.PurchaseTransactionDetails)
-                {
-                    objPT.customerId = Convert.ToInt32(frm["CustomerName"]);
-                    objPTD.ProductId = Convert.ToInt32(frm["ProductId"]);
+                objPTS.GetCreatedPurchaseTransaction(objPT, frm);
+                //foreach (var product in objPT.PurchaseTransactionDetails)
+                //{
+                //    objPT.customerId = Convert.ToInt32(frm["CustomerName"]);
+                //    objPTD.ProductId = Convert.ToInt32(frm["ProductId"]);
 
-                    var ProdModelCust = Mapper.Map<PurchaseTransaction, PurchaseTransactionSummeries>(objPT);
-                    ProdModelCust.customerId = objPT.customerId;
-                    db.PurchaseTransactionSummery_Context.Add(ProdModelCust);
-                    db.SaveChanges();
+                //    var ProdModelCust = Mapper.Map<PurchaseTransaction, PurchaseTransactionSummeries>(objPT);
+                //    ProdModelCust.customerId = objPT.customerId;
+                //    db.PurchaseTransactionSummery_Context.Add(ProdModelCust);
+                //    db.SaveChanges();
 
-                    var prodModel = Mapper.Map<PurchaseTransaction, PurchaseTransactionDetails>(objPT);
-                    prodModel.PurchaseTransactionSummaryId = ProdModelCust.Id;
-                    prodModel.Quantity = product.Quantity;
-                    prodModel.Rate = product.Rate;
-                    prodModel.ProductId = product.ProductId;
+                //    var prodModel = Mapper.Map<PurchaseTransaction, PurchaseTransactionDetails>(objPT);
+                //    prodModel.PurchaseTransactionSummaryId = ProdModelCust.Id;
+                //    prodModel.Quantity = product.Quantity;
+                //    prodModel.Rate = product.Rate;
+                //    prodModel.ProductId = product.ProductId;
 
-                    db.PurchaseTransactionDetails_Context.Add(prodModel);
-                    db.SaveChanges();
-                }
+                //    db.PurchaseTransactionDetails_Context.Add(prodModel);
+                //    db.SaveChanges();
+                //}
 
 
                 ViewBag.CustomerName = new SelectList(db.Customer_Context, "Id", "Name");
@@ -94,32 +94,35 @@ namespace ProductDemoApplication.Controllers
         }
 
 
-        public ActionResult FillProduct(int product)
+        public ActionResult FillProduct(int product,PurchaseTransactionService objPTS)
         {
-            var categories = db.Product_Context.Where(c => c.ProductCategoryId == product);
+           // var categories = db.Product_Context.Where(c => c.ProductCategoryId == product);
+            var categories = objPTS.GetProduct(product);
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult FillText(int prodctCat)
+        public ActionResult FillText(int prodctCat,PurchaseTransactionService objPTS)
         {
-            var products = from prod in db.Product_Context where prod.Id == prodctCat select prod;
+            // var products = from prod in db.Product_Context where prod.Id == prodctCat select prod;
+            var products = objPTS.FillRate(prodctCat);
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult FillReport(int custId)
+        public ActionResult FillReport(int custId,PurchaseTransactionService objPTS)
         {
-            var Report = (from m in db.PurchaseTransactionSummery_Context
-                          join n in db.PurchaseTransactionDetails_Context on new { a = m.customerId, b = m.Id } equals new { a = custId, b = n.PurchaseTransactionSummaryId }
-                          join s in db.Product_Context on n.ProductId equals s.Id
-                          join c in db.ProductCategories_Context on s.ProductCategoryId equals c.Id
+            //var Report = (from m in db.PurchaseTransactionSummery_Context
+            //              join n in db.PurchaseTransactionDetails_Context on new { a = m.customerId, b = m.Id } equals new { a = custId, b = n.PurchaseTransactionSummaryId }
+            //              join s in db.Product_Context on n.ProductId equals s.Id
+            //              join c in db.ProductCategories_Context on s.ProductCategoryId equals c.Id
 
-                          select new
-                          {
-                              n.PurchaseTransactionSummaryId,
-                              n.Quantity,
-                              n.Rate,
-                              s.Name,
-                              productCategoryName = c.Name
-                          }).ToList();
+            //              select new
+            //              {
+            //                  n.PurchaseTransactionSummaryId,
+            //                  n.Quantity,
+            //                  n.Rate,
+            //                  s.Name,
+            //                  productCategoryName = c.Name
+            //              }).ToList();
+            var Report = objPTS.GetReport(custId);
             return Json(Report, JsonRequestBehavior.AllowGet);
 
         }
