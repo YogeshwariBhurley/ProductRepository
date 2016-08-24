@@ -9,26 +9,19 @@ using ProductDemoApplication.Models;
 using System.Net;
 using System.Data.Entity;
 using AutoMapper;
+
+using ProductDemoApplication.Servieces;
 namespace ProductDemoApplication.Controllers
 {
     public class CustomerController : Controller
     {
 
         ProductContext db = new ProductContext();
-        public ActionResult Index()
+        public ActionResult Index(CustomerService objCustService)
         {
             try
             {
-                var cusotmer = from Customers in db.Customer_Context select Customers;
-                var custs = new List<CustomoerCreateEditModel>();
-                if (cusotmer.Any())
-                {
-                    foreach (var cust in cusotmer)
-                    {
-                        CustomoerCreateEditModel custModel = Mapper.Map<Customers, CustomoerCreateEditModel>(cust);
-                        custs.Add(custModel);
-                    }
-                }
+               var custs= objCustService.GetCustomer();
                 return View(custs);
             }
             catch
@@ -42,13 +35,11 @@ namespace ProductDemoApplication.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(CustomoerCreateEditModel objCustomers)
+        public ActionResult Create(CustomoerCreateEditModel objCustomers,CustomerService objCS)
         {
             try
             {
-                var custModel = Mapper.Map<CustomoerCreateEditModel, Customers>(objCustomers);
-                db.Customer_Context.Add(custModel);
-                db.SaveChanges();
+                objCS.GetCreatedCustomer(objCustomers);
                 return RedirectToAction("Index");
             }
             catch
@@ -57,12 +48,11 @@ namespace ProductDemoApplication.Controllers
             }
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id,CustomerService objCS)
         {
             try
             {
-                var custDetails = db.Customer_Context.Find(id);
-                var prodModel = Mapper.Map<Customers, CustomoerCreateEditModel>(custDetails);
+                var prodModel = objCS.ShowEditedCustomer(id);
                 return View(prodModel);
             }
             catch
@@ -72,13 +62,11 @@ namespace ProductDemoApplication.Controllers
 
         }
         [HttpPost]
-        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] CustomoerCreateEditModel objCustomers)
+        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] CustomoerCreateEditModel objCustomers,CustomerService objCS)
         {
             try
             {
-                var custModel = Mapper.Map<CustomoerCreateEditModel, Customers>(objCustomers);
-                db.Entry(custModel).State = EntityState.Modified;
-                db.SaveChanges();
+                objCS.GetEditedCustomer(objCustomers);
                 return RedirectToAction("Index");
             }
             catch
@@ -87,13 +75,12 @@ namespace ProductDemoApplication.Controllers
             }
 
         }
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id,CustomerService objCS)
         {
             try
             {
-                var CustDetails = db.Customer_Context.Find(id);
-                CustomoerCreateEditModel custModel = Mapper.Map<Customers, CustomoerCreateEditModel>(CustDetails);
-                return View(custModel);
+               var custModel= objCS.GetDetailedCustomer(id);
+               return View(custModel);
             }
             catch
             {
@@ -102,12 +89,11 @@ namespace ProductDemoApplication.Controllers
 
 
         }
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id,CustomerService objCS)
         {
             try
             {
-                var custDetails = db.Customer_Context.Find(id);
-                var cust = Mapper.Map<Customers, CustomoerCreateEditModel>(custDetails);
+                var cust=objCS.ShowDeletedCustomer(id);
                 return View(cust);
             }
             catch
@@ -117,13 +103,12 @@ namespace ProductDemoApplication.Controllers
 
         }
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id,CustomerService objCS)
         {
             try
             {
-                var custDetails = db.Customer_Context.Find(id);
-                db.Customer_Context.Remove(custDetails);
-                db.SaveChanges();
+                CustomoerCreateEditModel objCust = new CustomoerCreateEditModel();
+                objCS.GetDeletedCustomer(id, objCust);
                 return RedirectToAction("Index");
             }
             catch

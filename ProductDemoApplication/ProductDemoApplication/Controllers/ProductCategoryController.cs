@@ -9,6 +9,7 @@ using ProductDemoApplication.Models;
 using System.Net;
 using System.Data.Entity;
 using ProductDemoApplication.Entities;
+using ProductDemoApplication.Servieces;
 
 
 using AutoMapper;
@@ -17,47 +18,43 @@ namespace ProductDemoApplication.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        
         ProductContext db = new ProductContext();
-        public ActionResult Index()
+        public ActionResult Index(ProductCategoryService objPCS)
         {
             try
             {
-                var prodLists = from ProductCategories in db.ProductCategories_Context select ProductCategories;
-                var Prods = new List<ProductCategoryCreateEditModel>();
-                if (prodLists.Any())
-                {
-                    foreach (var prod in prodLists)
-                    {
+                 var Prods=objPCS.GetCategory();        
 
-                        ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
-                        Prods.Add(prodModel);
+                //ProductCategoryCreateEditModel objproduct = new ProductCategoryCreateEditModel();
+                //var prodLists = from ProductCategories in db.ProductCategories_Context select ProductCategories;
+                //var Prods = new List<ProductCategoryCreateEditModel>();
+                //if (prodLists.Any())
+                //{
+                //    foreach (var prod in prodLists)
+                //    {
 
-                    }
-                }
+                //        ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prod);
+                //        Prods.Add(prodModel);
+                //    }
+                //}
                 return View(Prods);
             }
             catch
             {
                 return View();
-            }
-            
-
+            }            
         }
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
-
-
-        public ActionResult Create(ProductCategoryCreateEditModel objProductCategory)
+        public ActionResult Create(ProductCategoryCreateEditModel objProductCategory, ProductCategoryService objPCS)
         {
             try
+
             {
-                var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
-                db.ProductCategories_Context.Add(prodModel);
-                db.SaveChanges();
+                objPCS.GetCreatedCategory(objProductCategory);             
                 return RedirectToAction("Index");
             }
             catch
@@ -65,12 +62,11 @@ namespace ProductDemoApplication.Controllers
                 return View();
             }         
         }
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, ProductCategoryService objPCS)
         {
          try
             {
-                var prodDetails = db.ProductCategories_Context.Find(id);
-                var prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prodDetails);
+                var prodModel= objPCS.ShowEditedCategory(id);             
                 return View(prodModel);
             }
             catch
@@ -80,29 +76,23 @@ namespace ProductDemoApplication.Controllers
            
         }
         [HttpPost]
-        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")] ProductCategoryCreateEditModel objProductCategory)
+        public ActionResult Edit([Bind(Exclude = "DateCreated,DateUpdated")]ProductCategoryService objPCS, ProductCategoryCreateEditModel objProductCategory)
         {
             try
             {
-                var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
-                db.Entry(prodModel).State = EntityState.Modified;
-                db.SaveChanges();
+                objPCS.GetEditedCategory(objProductCategory);
                 return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
-
-
-
         }
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, ProductCategoryService objPCS)
         {
             try
-            {
-                var ProductCatDetails = db.ProductCategories_Context.Find(id);
-                ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
+            {               
+                var prodModel = objPCS.GetDetailsCategory(id);
                 return View(prodModel);
             }
             catch
@@ -111,12 +101,11 @@ namespace ProductDemoApplication.Controllers
             }
            
         }
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, ProductCategoryService objPCS)
         {
             try
             {
-                var ProductCatDetails = db.ProductCategories_Context.Find(id);
-                var prod = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
+                var prod = objPCS.ShowDeletedCategory(id);
                 return View(prod);
             }
             catch
@@ -125,13 +114,14 @@ namespace ProductDemoApplication.Controllers
             }
         }
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, ProductCategoryService objPCS)
         {
           try
             {
-                var ProductCatDetails = db.ProductCategories_Context.Find(id);
-                db.ProductCategories_Context.Remove(ProductCatDetails);
-                db.SaveChanges();
+                ProductCategoryCreateEditModel objProductCat = new ProductCategoryCreateEditModel();
+                objPCS.GetDeletedCategory(id, objProductCat);
+            //    ProductCategoryCreateEditModel objProductCategory = new ProductCategoryCreateEditModel();
+            //    objPCS.GetDeletedCategory(id, objProductCategory);
                 return RedirectToAction("Index");
             }
             catch

@@ -8,8 +8,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-using ProductDemoApplication.AutomapperCode;
 
+using ProductDemoApplication.AutomapperCode;
+using ProductDemoApplication.App_Start;
 
 namespace ProductDemoApplication
 {
@@ -22,6 +23,7 @@ namespace ProductDemoApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<ProductContext>(null);
+            AutofacConfig.Configuration();
             //AutoMapperInit.Initialize();
         }
     }

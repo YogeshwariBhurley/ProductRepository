@@ -6,7 +6,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProductDemoApplication.Entities
-{
+{  
     public class ProductCategories
     {
         public ProductCategories()

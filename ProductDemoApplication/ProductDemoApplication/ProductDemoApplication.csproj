@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.0.0\lib\net451\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -166,6 +174,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -206,7 +215,15 @@
     <Compile Include="Models\PurchaseTransactionDetailsCreateEditDelete.cs" />
     <Compile Include="Models\PurchaseTransactionList.cs" />
     <Compile Include="Models\PurchaseTransactionSummeriesCreateEdit.cs" />
+    <Compile Include="Servieces\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servieces\CustomerService.cs" />
+    <Compile Include="Servieces\ICustomerService.cs" />
+    <Compile Include="Servieces\IProduct.cs" />
+    <Compile Include="Servieces\IProductCategoryService.cs" />
+    <Compile Include="Servieces\IPurchaseTransactionService.cs" />
+    <Compile Include="Servieces\ProductCategoryService.cs" />
+    <Compile Include="Servieces\PurchaseTransactionService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

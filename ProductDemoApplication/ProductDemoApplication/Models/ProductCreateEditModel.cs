@@ -6,6 +6,10 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using ProductDemoApplication.Entities;
 
+
+
+
+
 namespace ProductDemoApplication.Models
 {
     public class ProductCreateEditModel
@@ -16,7 +20,7 @@ namespace ProductDemoApplication.Models
             DateUpdated = DateTime.Now;
         }
         public int Id { get; set; }
-       
+
         public string Name { get; set; }
         [Required]
         public double Rate { get; set; }
@@ -25,11 +29,10 @@ namespace ProductDemoApplication.Models
         public string ProductCategoryName { get; set; }
         //Navigation properties
         //public int ProductCategoryId { get; set; }
-        public int ProductCategoryId{ get; set; }
+        public int ProductCategoryId { get; set; }
 
 
         public virtual ProductCategories ProductCategory { get; set; }
-
 
     }
 }
