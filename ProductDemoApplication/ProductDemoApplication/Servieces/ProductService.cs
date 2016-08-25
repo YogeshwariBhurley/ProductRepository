@@ -32,6 +32,12 @@ namespace ProductDemoApplication
         }
         public ProductCreateEditModel GetCreatedProduct(ProductCreateEditModel objProduct)
         {
+            Mapper.Initialize(cfg =>
+            {
+
+                cfg.CreateMap<Products, ProductCreateEditModel>();
+                cfg.CreateMap<ProductCreateEditModel, Products>();
+            });
             var prodModel = Mapper.Map<ProductCreateEditModel, Products>(objProduct);
             db.Product_Context.Add(prodModel);
             db.SaveChanges();
@@ -39,12 +45,24 @@ namespace ProductDemoApplication
         }
         public ProductCreateEditModel ShowEditedProduct(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+
+                cfg.CreateMap<Products, ProductCreateEditModel>();
+                cfg.CreateMap<ProductCreateEditModel, Products>();
+            });
             var prodDetails = db.Product_Context.Find(id);           
             var prodModel = Mapper.Map<Products, ProductCreateEditModel>(prodDetails);          
             return prodModel;
         }
         public ProductCreateEditModel GetEditedProduct(ProductCreateEditModel objProduct)
         {
+            Mapper.Initialize(cfg =>
+            {
+
+                cfg.CreateMap<Products, ProductCreateEditModel>();
+                cfg.CreateMap<ProductCreateEditModel, Products>();
+            });
             var prodModel = Mapper.Map<ProductCreateEditModel, Products>(objProduct);
             db.Entry(prodModel).State = EntityState.Modified;
             db.SaveChanges();
@@ -52,18 +70,36 @@ namespace ProductDemoApplication
         }
         public ProductCreateEditModel GetDetailedProduct(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+
+                cfg.CreateMap<Products, ProductCreateEditModel>();
+                cfg.CreateMap<ProductCreateEditModel, Products>();
+            });
             var ProductDetails = db.Product_Context.Find(id);
             ProductCreateEditModel prodModel = Mapper.Map<Products, ProductCreateEditModel>(ProductDetails);
             return prodModel;
         }
         public ProductCreateEditModel ShowDeletedProduct(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+
+                cfg.CreateMap<Products, ProductCreateEditModel>();
+                cfg.CreateMap<ProductCreateEditModel, Products>();
+            });
             var ProductDetails = db.Product_Context.Find(id);
             var prod = Mapper.Map<Products, ProductCreateEditModel>(ProductDetails);
             return prod;
         }
         public ProductCreateEditModel GetDeletedProduct(int id,ProductCreateEditModel objproduct)
         {
+            Mapper.Initialize(cfg =>
+            {
+
+                cfg.CreateMap<Products, ProductCreateEditModel>();
+                cfg.CreateMap<ProductCreateEditModel, Products>();
+            });
             var ProductDetails = db.Product_Context.Find(id);
             db.Product_Context.Remove(ProductDetails);
             db.SaveChanges();

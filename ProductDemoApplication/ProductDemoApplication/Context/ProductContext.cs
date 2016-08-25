@@ -30,8 +30,12 @@ namespace ProductDemoApplication.Context
 
         public System.Data.Entity.DbSet<ProductDemoApplication.Models.PurchaseTransaction> PurchaseTransactions { get; set; }
 
-        
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // other code 
+            Database.SetInitializer<ProductContext>(null);
+            // more code
+        }
     }
     
 }

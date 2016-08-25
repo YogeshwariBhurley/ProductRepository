@@ -52,8 +52,8 @@
       <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201608100222018_InitialCreate.Designer.cs">
       <DependentUpon>201608100222018_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608240845380_UpdateMigration.cs" />
+    <Compile Include="Migrations\201608240845380_UpdateMigration.Designer.cs">
+      <DependentUpon>201608240845380_UpdateMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CustomerListModel.cs" />
     <Compile Include="Models\CustomoerCreateEditModel.cs" />
@@ -316,6 +320,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608100222018_InitialCreate.resx">
       <DependentUpon>201608100222018_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608240845380_UpdateMigration.resx">
+      <DependentUpon>201608240845380_UpdateMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

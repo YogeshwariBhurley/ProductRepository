@@ -45,6 +45,7 @@ namespace ProductDemoApplication.Servieces
         }
         public List<Products> GetProduct(int product)
         {
+
             var categories = db.Product_Context.Where(c => c.ProductCategoryId == product);
             return categories.ToList();
         }

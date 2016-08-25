@@ -24,7 +24,8 @@ namespace ProductDemoApplication
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<ProductContext>(null);
             AutofacConfig.Configuration();
-            //AutoMapperInit.Initialize();
+          
+            AutoMapperInit.Initialize();
         }
     }
 }

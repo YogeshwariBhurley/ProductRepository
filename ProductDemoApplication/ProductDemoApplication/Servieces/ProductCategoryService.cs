@@ -33,19 +33,34 @@ namespace ProductDemoApplication.Servieces
         }
         public ProductCategoryCreateEditModel GetCreatedCategory(ProductCategoryCreateEditModel objProductCategory)
         {
-            var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
+            });
+                var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
             db.ProductCategories_Context.Add(prodModel);
             db.SaveChanges();
             return objProductCategory;
         }
         public ProductCategoryCreateEditModel ShowEditedCategory(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
+            });
             var prodDetails = db.ProductCategories_Context.Find(id);
              var prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(prodDetails);
             return prodModel;
         }
         public ProductCategoryCreateEditModel GetEditedCategory(ProductCategoryCreateEditModel objProductCategory)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
+            });
             var prodModel = Mapper.Map<ProductCategoryCreateEditModel, ProductCategories>(objProductCategory);
             db.Entry(prodModel).State = EntityState.Modified;
             db.SaveChanges();
@@ -53,18 +68,33 @@ namespace ProductDemoApplication.Servieces
         }
         public ProductCategoryCreateEditModel GetDetailsCategory(int? id) 
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
+            });
             var ProductCatDetails = db.ProductCategories_Context.Find(id);
             ProductCategoryCreateEditModel prodModel = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
             return prodModel;
         }
         public ProductCategoryCreateEditModel ShowDeletedCategory(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
+            });
             var ProductCatDetails = db.ProductCategories_Context.Find(id);
             var prod = Mapper.Map<ProductCategories, ProductCategoryCreateEditModel>(ProductCatDetails);
             return prod;
         }
         public ProductCategoryCreateEditModel GetDeletedCategory(int id, ProductCategoryCreateEditModel objProductCategory)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
+                cfg.CreateMap<ProductCategoryCreateEditModel, ProductCategories>();
+            });
             var ProductCatDetails = db.ProductCategories_Context.Find(id);
             db.ProductCategories_Context.Remove(ProductCatDetails);
             db.SaveChanges();

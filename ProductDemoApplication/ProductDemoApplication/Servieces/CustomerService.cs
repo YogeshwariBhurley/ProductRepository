@@ -9,21 +9,22 @@ using ProductDemoApplication.Models;
 using System.Net;
 using System.Data.Entity;
 using ProductDemoApplication.Entities;
+using ProductDemoApplication.AutomapperCode;
+
 
 namespace ProductDemoApplication.Servieces
 {
     public class CustomerService
-    {
+    {        
         ProductContext db = new ProductContext();
         public List<CustomoerCreateEditModel> GetCustomer()
         {
-
             var cusotmer = from Customers in db.Customer_Context select Customers;
             var custs = new List<CustomoerCreateEditModel>();
             if (cusotmer.Any())
             {
                 foreach (var cust in cusotmer)
-                {
+                {                 
                     CustomoerCreateEditModel custModel = Mapper.Map<Customers, CustomoerCreateEditModel>(cust);
                     custs.Add(custModel);
                 }
@@ -32,6 +33,12 @@ namespace ProductDemoApplication.Servieces
         }
         public CustomoerCreateEditModel GetCreatedCustomer(CustomoerCreateEditModel objCustomers)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+            });
+
             var custModel = Mapper.Map<CustomoerCreateEditModel, Customers>(objCustomers);
             db.Customer_Context.Add(custModel);
             db.SaveChanges();
@@ -39,12 +46,23 @@ namespace ProductDemoApplication.Servieces
         }
         public CustomoerCreateEditModel ShowEditedCustomer(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+            });
             var custDetails = db.Customer_Context.Find(id);
+            
             var prodModel = Mapper.Map<Customers, CustomoerCreateEditModel>(custDetails);
             return prodModel;
         }
         public CustomoerCreateEditModel GetEditedCustomer(CustomoerCreateEditModel objCustomers)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+            });
             var custModel = Mapper.Map<CustomoerCreateEditModel, Customers>(objCustomers);
             db.Entry(custModel).State = EntityState.Modified;
             db.SaveChanges();
@@ -52,18 +70,33 @@ namespace ProductDemoApplication.Servieces
         }
         public CustomoerCreateEditModel GetDetailedCustomer(int?id)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+            });
             var CustDetails = db.Customer_Context.Find(id);
             CustomoerCreateEditModel custModel = Mapper.Map<Customers, CustomoerCreateEditModel>(CustDetails);
             return custModel;
         }
         public CustomoerCreateEditModel ShowDeletedCustomer(int? id)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+            });
             var custDetails = db.Customer_Context.Find(id);
             var cust = Mapper.Map<Customers, CustomoerCreateEditModel>(custDetails);
             return cust;
         }
         public CustomoerCreateEditModel GetDeletedCustomer(int id,CustomoerCreateEditModel objcust)
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Customers, CustomoerCreateEditModel>();
+                cfg.CreateMap<CustomoerCreateEditModel, Customers>();
+            });
             var custDetails = db.Customer_Context.Find(id);
             db.Customer_Context.Remove(custDetails);
             db.SaveChanges();

@@ -13,6 +13,9 @@ namespace ProductDemoApplication.AutomapperCode
     {
         public static void Initialize()
         {
+           
+
+
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<ProductCategories, ProductCategoryCreateEditModel>();
@@ -31,7 +34,8 @@ namespace ProductDemoApplication.AutomapperCode
                 cfg.CreateMap<PurchaseTransaction, PurchaseTransactionSummeries>();
                 cfg.CreateMap<PurchaseTransactionSummeries, PurchaseTransaction>();
             });
-            
+           
+
         }
     }
 }
